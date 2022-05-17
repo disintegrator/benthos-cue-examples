@@ -1,0 +1,26 @@
+input:
+  generate:
+    mapping: |
+      root = { "amount": 20, "currency": "USD" }
+    count: 1
+
+pipeline:
+  processors:
+    - cue_eval:
+        dir: ./cueball
+        package: "main"
+        fill_path: "usage"
+        selector: "fee"
+
+output:
+  switch:
+    cases:
+      - check: errored()
+        output:
+          drop: {}
+          processors:
+            - log:
+                message: "failed to process message: ${! error() }"
+                level: ERROR
+      - output:
+          stdout: {}
