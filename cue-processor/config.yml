@@ -7,7 +7,7 @@ input:
 pipeline:
   processors:
     - cue_eval:
-        dir: ./cueball
+        dir: ./cue-processor/cueball
         package: "main"
         fill_path: "usage"
         selector: "fee"
